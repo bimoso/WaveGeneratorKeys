@@ -1,64 +1,94 @@
-WAVE KEY GENERATOR
+# 🔑 Wave Key Generator
 
-REQUISITOS PREVIOS
-- Python 3.10.11 (https://www.python.org/downloads/release/python-31011/)
+Un generador automatizado de claves para Wave utilizando Python y Selenium.
+
+## 📋 Requisitos Previos
+
+- [Python 3.10.11](https://www.python.org/downloads/release/python-31011/)
 - Google Chrome o Chromium
-- ChromeDriver compatible (https://googlechromelabs.github.io/chrome-for-testing/)
+- [ChromeDriver](https://googlechromelabs.github.io/chrome-for-testing/) compatible con tu versión de Chrome
 
-INSTALACIÓN
+## ⚙️ Configuración del Entorno
 
-1. INSTALAR PYTHON 3.10.11
-   - Descarga Python 3.10.11 desde el enlace proporcionado
-   - Durante la instalación, marca la casilla "Add Python to PATH"
+### 1. Variable de Entorno ChromeDriver
 
-2. CONFIGURAR CHROMEDRIVER
-   # Crear carpeta para ChromeDriver
-   mkdir chromedriver-win64
-   
-   # Descomprimir el archivo descargado en esta carpeta
-   # Asegurarse que chromedriver.exe esté en: chromedriver-win64/chromedriver.exe
+Es necesario configurar la variable de entorno que apunta al directorio del ChromeDriver:
 
-3. INSTALAR DEPENDENCIAS
-   pip install -r requirements.txt
+1. Abre las Variables de entorno del sistema
+2. En "Variables de usuario", haz clic en "Nueva"
+3. Nombre: `PATH`
+4. Valor: `C:\Users\TU_USUARIO\chromedriver-win64`
+5. Haz clic en "Aceptar" para guardar
 
-USO
+> ⚠️ **Importante**: Reemplaza `TU_USUARIO` con tu nombre de usuario de Windows
 
-1. Asegúrate de tener una conexión a Internet estable
+### 2. Instalación de Python
+
+1. Descarga [Python 3.10.11](https://www.python.org/downloads/release/python-31011/)
+2. Durante la instalación:
+   - ✅ Marca "Add Python to PATH"
+   - Sigue el asistente de instalación
+
+### 3. Configuración de ChromeDriver
+
+```bash
+# Crear directorio para ChromeDriver
+mkdir chromedriver-win64
+
+# Descomprime el archivo descargado en esta carpeta
+# Verifica que chromedriver.exe esté en: chromedriver-win64/chromedriver.exe
+```
+
+### 4. Instalación de Dependencias
+
+```bash
+pip install -r requirements.txt
+```
+
+## 🚀 Uso
+
+1. Verifica tu conexión a Internet
 2. Ejecuta el script:
-   python WaveGenerateKey.py
+```bash
+python WaveGenerateKey.py
+```
 
-NOTAS IMPORTANTES
+## 📁 Estructura del Proyecto
 
-- El ChromeDriver debe coincidir con tu versión de Chrome
-- Se recomienda usar una VPN para evitar limitaciones
-- Las claves generadas se guardarán en keys.txt
-
-SOLUCIÓN DE PROBLEMAS
-
-Si aparece un error de compatibilidad de ChromeDriver:
-1. Abre Chrome y ve a chrome://version
-2. Anota el número de versión
-3. Descarga el ChromeDriver correspondiente
-4. Reemplaza el archivo existente
-
-ESTRUCTURA DEL PROYECTO
-
+```
 wave-key-generator/
 │
-├── WaveGenerateKey.py
-├── requirements.txt
-├── chromedriver-win64/
+├── WaveGenerateKey.py    # Script principal
+├── requirements.txt      # Dependencias
+├── chromedriver-win64/   # Directorio del driver
 │   └── chromedriver.exe
-├── keys.txt
-└── README.md
+├── keys.txt             # Archivo de claves generadas
+└── README.md            # Documentación
+```
 
-VERSIONES DE CHROMEDRIVER:
-- Chrome 130: chromedriver v130.0.6723.91
-  https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/130.0.6723.91/win64/chromedriver-win64.zip
-- Chrome 129: chromedriver v129.0.6668.89
-  https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/129.0.6668.89/win64/chromedriver-win64.zip
+## 🌐 Versiones Compatibles de ChromeDriver
 
-Para verificar tu versión de Chrome:
-1. Abre Chrome
-2. Escribe en la barra de direcciones: chrome://version
-3. Descarga el ChromeDriver correspondiente
+| Versión de Chrome | ChromeDriver | Enlace de Descarga |
+|-------------------|--------------|-------------------|
+| Chrome 130 | v130.0.6723.91 | [Descargar](https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/130.0.6723.91/win64/chromedriver-win64.zip) |
+| Chrome 129 | v129.0.6668.89 | [Descargar](https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/129.0.6668.89/win64/chromedriver-win64.zip) |
+
+### 🔍 Verificar tu Versión de Chrome
+
+1. Abre Google Chrome
+2. En la barra de direcciones, escribe: `chrome://version`
+3. Descarga el ChromeDriver correspondiente a tu versión
+
+## 🔧 Solución de Problemas
+
+Si encuentras errores de compatibilidad con ChromeDriver:
+
+1. Verifica tu versión de Chrome (`chrome://version`)
+2. Descarga el ChromeDriver correspondiente
+3. Reemplaza el archivo existente en la carpeta `chromedriver-win64`
+
+## 💡 Consejos
+
+- Utiliza una VPN para evitar limitaciones de uso
+- Las claves generadas se guardan automáticamente en `keys.txt`
+- Mantén actualizado tanto Chrome como ChromeDriver
