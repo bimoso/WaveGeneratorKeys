@@ -1,0 +1,64 @@
+WAVE KEY GENERATOR
+
+REQUISITOS PREVIOS
+- Python 3.10.11 (https://www.python.org/downloads/release/python-31011/)
+- Google Chrome o Chromium
+- ChromeDriver compatible (https://googlechromelabs.github.io/chrome-for-testing/)
+
+INSTALACIÓN
+
+1. INSTALAR PYTHON 3.10.11
+   - Descarga Python 3.10.11 desde el enlace proporcionado
+   - Durante la instalación, marca la casilla "Add Python to PATH"
+
+2. CONFIGURAR CHROMEDRIVER
+   # Crear carpeta para ChromeDriver
+   mkdir chromedriver-win64
+   
+   # Descomprimir el archivo descargado en esta carpeta
+   # Asegurarse que chromedriver.exe esté en: chromedriver-win64/chromedriver.exe
+
+3. INSTALAR DEPENDENCIAS
+   pip install -r requirements.txt
+
+USO
+
+1. Asegúrate de tener una conexión a Internet estable
+2. Ejecuta el script:
+   python WaveGenerateKey.py
+
+NOTAS IMPORTANTES
+
+- El ChromeDriver debe coincidir con tu versión de Chrome
+- Se recomienda usar una VPN para evitar limitaciones
+- Las claves generadas se guardarán en keys.txt
+
+SOLUCIÓN DE PROBLEMAS
+
+Si aparece un error de compatibilidad de ChromeDriver:
+1. Abre Chrome y ve a chrome://version
+2. Anota el número de versión
+3. Descarga el ChromeDriver correspondiente
+4. Reemplaza el archivo existente
+
+ESTRUCTURA DEL PROYECTO
+
+wave-key-generator/
+│
+├── WaveGenerateKey.py
+├── requirements.txt
+├── chromedriver-win64/
+│   └── chromedriver.exe
+├── keys.txt
+└── README.md
+
+VERSIONES DE CHROMEDRIVER:
+- Chrome 130: chromedriver v130.0.6723.91
+  https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/130.0.6723.91/win64/chromedriver-win64.zip
+- Chrome 129: chromedriver v129.0.6668.89
+  https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/129.0.6668.89/win64/chromedriver-win64.zip
+
+Para verificar tu versión de Chrome:
+1. Abre Chrome
+2. Escribe en la barra de direcciones: chrome://version
+3. Descarga el ChromeDriver correspondiente
