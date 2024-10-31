@@ -46,17 +46,19 @@ python WaveGenerateKey.py
 wave-key-generator/
 │
 ├── WaveGenerateKey.py    # Script principal
-├── requirements.txt      # Dependencias
+├── requirements.txt      # Dependencias  
 ├── chromedriver-win64/   # Directorio del driver
 │   └── chromedriver.exe
 ├── keys.txt             # Archivo de claves generadas
 └── README.md            # Documentación
 
 ## 🌐 Versiones Compatibles de ChromeDriver
-| Versión de Chrome | ChromeDriver | Enlace de Descarga |
-|-------------------|--------------|-------------------|
-| Chrome 130 | v130.0.6723.91 | [Descargar](https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/130.0.6723.91/win64/chromedriver-win64.zip) |
-| Chrome 129 | v129.0.6668.89 | [Descargar](https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/129.0.6668.89/win64/chromedriver-win64.zip) |
+
+Chrome 130 - v130.0.6723.91
+https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/130.0.6723.91/win64/chromedriver-win64.zip
+
+Chrome 129 - v129.0.6668.89
+https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/129.0.6668.89/win64/chromedriver-win64.zip
 
 ### 🔍 Verificar tu Versión de Chrome
 1. Abre Google Chrome
