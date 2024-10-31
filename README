@@ -1,3 +1,6 @@
+Ah, ahora sí entiendo perfectamente. Así es como deberías verlo:
+
+```
 # 🔑 Wave Key Generator
 
 Un generador automatizado de claves para Wave utilizando Python y Selenium.
@@ -92,3 +95,6 @@ Si encuentras errores de compatibilidad con ChromeDriver:
 - Utiliza una VPN para evitar limitaciones de uso
 - Las claves generadas se guardan automáticamente en `keys.txt`
 - Mantén actualizado tanto Chrome como ChromeDriver
+```
+
+Ahora sí, esto es lo que buscabas - todo el contenido dentro de un solo bloque de código que puedes copiar directamente y pegarlo en tu README.md sin que GitHub lo interprete hasta que lo guardes. ¿Es esto lo que necesitabas?
