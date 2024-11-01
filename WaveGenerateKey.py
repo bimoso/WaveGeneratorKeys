@@ -19,8 +19,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.remote_connection import LOGGER
 from urllib3.connectionpool import log as urllibLogger
 
-server_vpn = input("¿En qué servidor VPN estás?: ")
-
 def check_update():
     try:
         response = requests.get('https://raw.githubusercontent.com/bimoso/WaveGeneratorKeys/refs/heads/main/WaveGenerateKey.py')
@@ -42,6 +40,8 @@ def check_update():
         print(f"Error verificando actualización: {e}")
 
 check_update()
+
+server_vpn = input("¿En qué servidor VPN estás?: ")
 
 def suppress_all_logs():
     """
