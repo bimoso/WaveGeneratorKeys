@@ -3,6 +3,7 @@ WaveGenerateKey module for bypassing tasks on getwave.gg.
 """
 
 import os
+import sys
 import time
 import threading
 import warnings
@@ -20,25 +21,26 @@ from selenium.webdriver.remote.remote_connection import LOGGER
 from urllib3.connectionpool import log as urllibLogger
 
 def check_update():
+    """Check and update the script from GitHub repository if a new version is available."""
     try:
-        response = requests.get('https://raw.githubusercontent.com/bimoso/WaveGeneratorKeys/refs/heads/main/WaveGenerateKey.py')
+        url = ('https://raw.githubusercontent.com/bimoso/'
+               'WaveGeneratorKeys/refs/heads/main/WaveGenerateKey.py')
+        response = requests.get(url, timeout=10)
         if response.status_code == 200:
             remote_code = response.text
-            with open(__file__, 'r', encoding='utf-8') as f:
+            with open('WaveGenerateKey.py', 'r', encoding='utf-8') as f:
                 local_code = f.read()
             
             if local_code != remote_code:
                 print("Actualizando código...")
-                with open(__file__, 'w', encoding='utf-8') as f:
+                with open('WaveGenerateKey.py', 'w', encoding='utf-8-sig') as f:
                     f.write(remote_code)
-                print("Código actualizado exitosamente")
-                # Add encoding declaration at the start of the file
-                if not remote_code.startswith('# -*- coding: utf-8 -*-'):
-                    remote_code = '# -*- coding: utf-8 -*-\n' + remote_code
-                exit()
+                    print("Código actualizado exitosamente")
+                    # Salir para reiniciar el script                    
+                    sys.exit()
         else:
             print("No se pudo verificar actualización")
-    except Exception as e:
+    except (requests.RequestException, IOError) as e:
         print(f"Error verificando actualización: {e}")
 
 check_update()
@@ -84,7 +86,7 @@ class WaveBypass:
         chrome_options.add_argument('--disable-blink-features=AutomationControlled')
         chrome_options.add_argument('--disable-extensions')
         chrome_options.add_argument('--disable-gpu')
-        chrome_options.add_argument('--headless')  # Esta opci�n hace que el navegador sea invisible
+        chrome_options.add_argument('--headless')  # Esta opción hace que el navegador sea invisible
         chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])
         chrome_options.add_experimental_option('useAutomationExtension', False)
         chrome_options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 OPR/114.0.0.0')
@@ -98,10 +100,10 @@ class WaveBypass:
     
     def get_session(self):
         try:
-            print("Iniciando obtenci�n de sesi�n...")
+            print("Iniciando obtención de sesión...")
             self.driver.get('https://key.getwave.gg/freemium-tasks')
             
-            # Esperar a que la p�gina cargue completamente
+            # Esperar a que la página cargue completamente
             WebDriverWait(self.driver, 20).until(
                 EC.presence_of_element_located((By.TAG_NAME, "body"))
             )
@@ -128,10 +130,10 @@ class WaveBypass:
                     
                     return self.session_id
             
-            print("No se encontr� la cookie wave-freemium-session \n Trata cambiando de servidor VPN")
+            print("No se encontró la cookie wave-freemium-session \n Trata cambiando de servidor VPN")
             return None
         except Exception as e:
-            print(f"Error detallado obteniendo sesi�n: {str(e)}")
+            print(f"Error detallado obteniendo sesión: {str(e)}")
             return None
 
     def get_task(self):
@@ -225,11 +227,11 @@ class WaveBypass:
             return response.json()
 
         except Exception as e:
-            print(f"Error en validaci�n: {e}")
+            print(f"Error en validación: {e}")
             return None
 
     def make_request(self, url, method='GET', headers=None, json=None):
-        """Funci�n auxiliar para hacer requests con manejo de SSL"""
+        """Función auxiliar para hacer requests con manejo de SSL"""
         try:
             if method == 'GET':
                 response = requests.get(url, headers=headers, verify=False)
@@ -273,19 +275,19 @@ class WaveBypass:
     def run(self):
         try:
             if not self.get_session():
-                raise Exception("No se pudo obtener sesi�n")
+                raise Exception("No se pudo obtener sesión")
             
             # Verificar estado inicial
             status = self.check_task_status()
             if status['status'] == 'completed':
-                print(f"�Clave encontrada sin necesidad de pasos!: {status['key']}")
+                print(f"¡Clave encontrada sin necesidad de pasos!: {status['key']}")
                 
                 return
     
-            max_retries = 3  # N�mero m�ximo de intentos por paso
+            max_retries = 3  # Número máximo de intentos por paso
             current_step = status['step'] if status['status'] == 'in_progress' else 1
             
-            while current_step <= 3:  # M�ximo 3 pasos
+            while current_step <= 3:  # Máximo 3 pasos
                 print(f"\nProcesando Step {current_step}")
                 
                 for attempt in range(max_retries):
@@ -304,12 +306,12 @@ class WaveBypass:
                     
                     bypassed = self.bypass_link(task_link)
                     if not bypassed or "?d" in bypassed:  # Validar link bypasseado
-                        print("Link bypasseado inv�lido")
+                        print("Link bypasseado inválido")
                         if attempt < max_retries - 1:
                             time.sleep(5)
                             continue
                         else:
-                            raise Exception(f"Bypass fall� en todos los intentos del paso {current_step}")
+                            raise Exception(f"Bypass falló en todos los intentos del paso {current_step}")
                     
                     print(f"Link bypasseado: {bypassed}")
                     
@@ -320,15 +322,15 @@ class WaveBypass:
                         # Validar el paso actual
                         validation = self.validate_task(bypassed)
                         if not validation:
-                            print("Error en validaci�n")
+                            print("Error en validación")
                             continue
                             
-                        print(f"Validaci�n paso {current_step}: {validation}")
+                        print(f"Validación paso {current_step}: {validation}")
                         
-                        # Verificar estado despu�s de validaci�n
+                        # Verificar estado después de validación
                         status = self.check_task_status()
                         if status['status'] == 'completed':
-                            print(f"�Clave obtenida exitosamente!: {status['key']}")
+                            print(f"¡Clave obtenida exitosamente!: {status['key']}")
                             #Almacenar la clave en un archivo o base de datos
                             with open('keys.txt', 'a') as f:
                                 f.write(f"{server_vpn} - {status['key']}\n")
