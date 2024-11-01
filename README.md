@@ -1,3 +1,5 @@
+
+[English](https://github.com/bimoso/WaveGeneratorKeys/blob/main/README-US.md)
 # 🔑 Wave Key Generator
 
 Un generador automatizado de claves para Wave utilizando Python y Selenium.
