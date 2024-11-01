@@ -21,7 +21,27 @@ from urllib3.connectionpool import log as urllibLogger
 
 server_vpn = input("¿En que servidor VPN estás?: ")
 
+def check_update():
+    try:
+        response = requests.get('https://raw.githubusercontent.com/bimoso/WaveGeneratorKeys/refs/heads/main/WaveGenerateKey.py')
+        if response.status_code == 200:
+            remote_code = response.text
+            with open('WaveGenerateKey.py', 'r') as f:
+                local_code = f.read()
+            
+            if local_code != remote_code:
+                print("Actualizando código...")
+                with open('WaveGenerateKey.py', 'w') as f:
+                    f.write(remote_code)
+                    print("Código actualizado exitosamente")
+                    # Salir para reiniciar el script
+                    exit()
+        else:
+            print("No se pudo verificar actualización")
+    except Exception as e:
+        print(f"Error verificando actualización: {e}")
 
+check_update()
 
 def suppress_all_logs():
     """
