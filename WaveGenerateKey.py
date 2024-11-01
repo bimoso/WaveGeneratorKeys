@@ -19,7 +19,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.remote_connection import LOGGER
 from urllib3.connectionpool import log as urllibLogger
 
-server_vpn = input("�En que servidor VPN est�s?: ")
+server_vpn = input("¿En qué servidor VPN estás?: ")
 
 def check_update():
     try:
