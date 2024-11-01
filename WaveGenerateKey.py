@@ -20,6 +20,9 @@ from selenium.webdriver.remote.remote_connection import LOGGER
 from urllib3.connectionpool import log as urllibLogger
 
 server_vpn = input("¿En que servidor VPN estás?: ")
+
+
+
 def suppress_all_logs():
     """
     Suppress all logs and warnings from various libraries.

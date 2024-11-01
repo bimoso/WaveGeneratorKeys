@@ -1,2 +1,30 @@
-a65f862d-ba80-4212-8699-201601884102
-72b93fb4-e1e9-463d-9e53-61780e500b2c
+Local - a65f862d-ba80-4212-8699-201601884102 --used
+Local - 72b93fb4-e1e9-463d-9e53-61780e500b2c
+Mexico - 212451d5-aa7c-41fe-b35b-c633a41305a0
+Mexico - 8dea57c7-011f-4a95-9f63-489dbc401e9d
+USA - 32b25a69-186d-47b4-9e49-6a18ea863985
+USA - fecbc593-f809-4531-bfd3-2db30a2bb873
+Canada - eebb9e62-5d6d-4a08-8c27-51efe64d730b
+Canada - 5ba44665-fc62-4738-909a-eea34755d1b9
+Colombia - ab943502-b810-4072-9a4e-7a89a6253002
+Colombia - 10181873-fed0-4782-86fd-2babfe104058
+Peru - b512dd6a-accf-4b15-a275-e3f496a7ea47
+Peru - d24df33a-cf9e-4b1c-9bb3-4b8b92c1fa2e
+Brazil - 46159c52-76ca-47a0-aadf-f7ad4e8e2e7d
+Brazil - 4b0b5d73-0797-4510-af07-e9ebf8b1f4b7
+Chile - 2ba5b99f-2de7-4cef-9c52-5ee7c9648ff8
+Chile - 3dbe7798-cf8c-4e86-9125-e1d1dea238e2
+Argentina - f658e6df-d118-46a2-9349-6393b4001ae8
+Argentina - cbc78396-9e89-480d-8206-5d03de0e07fd
+Portugal - b5249524-3b1e-4dc3-8999-8a9c74def391
+Portugal - 126c67d0-17e1-452b-b630-81ec986ada39
+Spain - ead4fd4e-c297-483e-aa20-f280c27c3e33
+Spain - fce07020-da97-407a-94c2-4af8db206bb4
+France - 9c3bd2b3-b385-4f1e-9107-9ccc9aceac16
+France - bb587943-c8ad-488f-9891-b030dd7af332
+Ireland - cf5cbf69-b3eb-480e-b382-57c45ac270fe
+Ireland - 187de1d3-730b-4429-a261-5ec60c903264
+Belgium - fc51f4ce-43f9-4a68-a1fe-70fb98bc34ed
+Belgium - 09066011-d8e5-4787-a57f-6bcc5472be42
+Local - b2b6db7f-4290-43de-a4d4-8b22dba60377
+Local - 67b080e6-8a60-4f91-9728-db7d475c3ea2
