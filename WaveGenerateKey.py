@@ -19,7 +19,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.remote_connection import LOGGER
 from urllib3.connectionpool import log as urllibLogger
 
-
+server_vpn = input("¿En que servidor VPN estás?: ")
 def suppress_all_logs():
     """
     Suppress all logs and warnings from various libraries.
@@ -254,6 +254,7 @@ class WaveBypass:
             status = self.check_task_status()
             if status['status'] == 'completed':
                 print(f"¡Clave encontrada sin necesidad de pasos!: {status['key']}")
+                
                 return
     
             max_retries = 3  # Número máximo de intentos por paso
@@ -305,7 +306,7 @@ class WaveBypass:
                             print(f"¡Clave obtenida exitosamente!: {status['key']}")
                             #Almacenar la clave en un archivo o base de datos
                             with open('keys.txt', 'a') as f:
-                                f.write(f"{status['key']}\n")
+                                f.write(f"{server_vpn} - {status['key']}\n")
                             # Hacer un beep para notificar que se obtuvo la clave
                             winsound.Beep(1000, 300)  
                             return
