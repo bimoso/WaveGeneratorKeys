@@ -26,20 +26,20 @@ def check_update():
         response = requests.get('https://raw.githubusercontent.com/bimoso/WaveGeneratorKeys/refs/heads/main/WaveGenerateKey.py')
         if response.status_code == 200:
             remote_code = response.text
-            with open('WaveGenerateKey.py', 'r') as f:
+            with open('WaveGenerateKey.py', 'r', encoding='utf-8') as f:
                 local_code = f.read()
             
             if local_code != remote_code:
-                print("Actualizando codigo...")
-                with open('WaveGenerateKey.py', 'w') as f:
+                print("Actualizando código...")
+                with open('WaveGenerateKey.py', 'w', encoding='utf-8') as f:
                     f.write(remote_code)
-                    print("Codigo actualizado exitosamente")
+                    print("Código actualizado exitosamente")
                     # Salir para reiniciar el script
                     exit()
         else:
-            print("No se pudo verificar actualizacion")
+            print("No se pudo verificar actualización")
     except Exception as e:
-        print(f"Error verificando actualizacion: {e}")
+        print(f"Error verificando actualización: {e}")
 
 check_update()
 
