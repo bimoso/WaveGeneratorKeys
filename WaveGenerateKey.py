@@ -1,4 +1,4 @@
-import os
+﻿import os
 import sys
 import time
 import threading
@@ -21,17 +21,16 @@ from filelock import FileLock
 def check_update():
     """Check and update the script from GitHub repository if a new version is available."""
     try:
-        url = ('https://raw.githubusercontent.com/bimoso/'
-               'WaveGeneratorKeys/refs/heads/main/WaveGenerateKey.py')
+        url = ('https://raw.githubusercontent.com/bimoso/WaveGeneratorKeys/refs/heads/main/WaveGenerateKey.py')
         response = requests.get(url, timeout=10)
         if response.status_code == 200:
             remote_code = response.text
-            with open('WaveGenerateKey.py', 'r', encoding='utf-8') as f:
+            with open(__file__, 'r', encoding='utf-8') as f:
                 local_code = f.read()
             
             if local_code != remote_code:
                 print("Actualizando código...")
-                with open('WaveGenerateKey.py', 'w', encoding='utf-8-sig') as f:
+                with open(__file__, 'w', encoding='utf-8-sig') as f:
                     f.write(remote_code)
                     print("Código actualizado exitosamente")
                     # Salir para reiniciar el script                    
