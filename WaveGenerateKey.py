@@ -108,6 +108,9 @@ class WaveBypass:
                             self.session_id = cookie_name
                             # Marcar la cookie como usada
                             cookies[self.session_id] = True
+                            # Guardar las cookies actualizadas en el archivo
+                            with open(cookie_file, 'w', encoding='utf-8') as f:
+                                json.dump(cookies, f)
                             print(f"Session ID encontrado en cookies.json: {self.session_id}")
                             return self.session_id
 
@@ -191,44 +194,50 @@ class WaveBypass:
             return None
 
     def bypass_link(self, link):
-        try:
-            params = {'link': link}
-            headers = {
-                'accept': 'application/json, text/plain, */*',
-                'accept-language': 'es-419,es;q=0.9',
-                'origin': 'https://bypassunlock.com',
-                'referer': 'https://bypassunlock.com/',
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 OPR/114.0.0.0',
-                'sec-ch-ua': '"Chromium";v="128", "Not;A=Brand";v="24", "Opera GX";v="114"',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Windows"',
-                'sec-fetch-dest': 'empty',
-                'sec-fetch-mode': 'cors',
-                'sec-fetch-site': 'cross-site',
-                'accept-encoding': 'gzip, deflate, br, zstd',
-                'if-none-match': 'W/"40-ytFVeUWlUOe2NNHT9DS5uLtQtP0"',
-                'priority': 'u=1, i'
-            }
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                params = {'link': link}
+                headers = {
+                    'accept': 'application/json, text/plain, */*',
+                    'accept-language': 'es-419,es;q=0.9',
+                    'origin': 'https://bypassunlock.com',
+                    'referer': 'https://bypassunlock.com/',
+                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 OPR/114.0.0.0',
+                    'sec-ch-ua': '"Chromium";v="128", "Not;A=Brand";v="24", "Opera GX";v="114"',
+                    'sec-ch-ua-mobile': '?0',
+                    'sec-ch-ua-platform': '"Windows"',
+                    'sec-fetch-dest': 'empty',
+                    'sec-fetch-mode': 'cors',
+                    'sec-fetch-site': 'cross-site',
+                    'accept-encoding': 'gzip, deflate, br, zstd',
+                    'if-none-match': 'W/"40-ytFVeUWlUOe2NNHT9DS5uLtQtP0"',
+                    'priority': 'u=1, i'
+                }
     
-            response = requests.get(
-                'https://bypassunlockapi-eqyp.onrender.com/bypass',
-                params=params,
-                headers=headers,
-                timeout=20
-            )
-            
-            data = response.json()
-            return data.get('bypassed')
+                response = requests.get(
+                    'https://bypassunlockapi-eqyp.onrender.com/bypass',
+                    params=params,
+                    headers=headers,
+                    timeout=60
+                )
+                
+                data = response.json()
+                return data.get('bypassed')
     
-        except requests.RequestException as e:
-            print(f"Error en bypass (RequestException): {e}")
-            return None
-        except json.JSONDecodeError as e:
-            print(f"Error en bypass (JSONDecodeError): {e}")
-            return None
-        except Exception as e:
-            print(f"Error en bypass (General): {e}")
-            return None
+            except requests.RequestException as e:
+                print(f"Error en bypass (RequestException): {e}")
+                if attempt < max_retries - 1:
+                    print("Reintentando...")
+                    time.sleep(5)  # Esperar antes de reintentar
+                else:
+                    return None
+            except json.JSONDecodeError as e:
+                print(f"Error en bypass (JSONDecodeError): {e}")
+                return None
+            except Exception as e:
+                print(f"Error en bypass (General): {e}")
+                return None
 
     def validate_task(self, bypassed_link):
         try:
