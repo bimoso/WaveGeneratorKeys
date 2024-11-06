@@ -21,8 +21,8 @@ from filelock import FileLock
 def check_update():
     """Check and update the script from GitHub repository if a new version is available."""
     try:
-        url = ('https://raw.githubusercontent.com/bimoso/WaveGeneratorKeys/refs/heads/main/WaveGenerateKey.py')
-        response = requests.get(url, timeout=10)
+        url = 'https://raw.githubusercontent.com/bimoso/WaveGeneratorKeys/main/WaveGenerateKey.py'
+        response = requests.get(url, timeout=10, verify=False)
         if response.status_code == 200:
             remote_code = response.text
             with open(__file__, 'r', encoding='utf-8') as f:
