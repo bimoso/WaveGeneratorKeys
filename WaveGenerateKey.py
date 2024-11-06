@@ -33,7 +33,10 @@ def check_update():
             
             if local_code != remote_code:
                 print("Actualizando código...")
-                with open(__file__, 'w', encoding='utf-8-sig') as f:
+                # Eliminar el BOM si está presente
+                if remote_code.startswith('\ufeff'):
+                    remote_code = remote_code[1:]
+                with open(__file__, 'w', encoding='utf-8') as f:
                     f.write(remote_code)
                     print("Código actualizado exitosamente")
                     # Salir para reiniciar el script                    
@@ -186,11 +189,11 @@ class WaveBypass:
                 'accept-language': 'es-419,es;q=0.9',
                 'priority': 'u=1, i'
             }
-    
-            response = requests.post('https://api.getwave.gg/v1/task/initiate', headers=headers, timeout=20, verify=False)
+
+            response = requests.post('https://api.getwave.gg/v1/task/initiate', headers=headers, timeout=20)
             data = response.json()
             return data.get('link')
-    
+
         except Exception as e:
             print(f"Error obteniendo task: {e}")
             return None
