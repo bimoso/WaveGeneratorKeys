@@ -186,11 +186,11 @@ class WaveBypass:
                 'accept-language': 'es-419,es;q=0.9',
                 'priority': 'u=1, i'
             }
-
-            response = requests.post('https://api.getwave.gg/v1/task/initiate', headers=headers, timeout=20)
+    
+            response = requests.post('https://api.getwave.gg/v1/task/initiate', headers=headers, timeout=20, verify=False)
             data = response.json()
             return data.get('link')
-
+    
         except Exception as e:
             print(f"Error obteniendo task: {e}")
             return None
