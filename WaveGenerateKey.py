@@ -1,7 +1,3 @@
-"""
-WaveGenerateKey module for bypassing tasks on getwave.gg.
-"""
-
 import os
 import sys
 import time
@@ -9,9 +5,10 @@ import threading
 import warnings
 import logging
 import winsound
-import urllib3
+import json
 from urllib.parse import urlparse, parse_qs
 import requests
+import urllib3
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -19,6 +16,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.remote_connection import LOGGER
 from urllib3.connectionpool import log as urllibLogger
+from filelock import FileLock
 
 def check_update():
     """Check and update the script from GitHub repository if a new version is available."""
@@ -69,8 +67,6 @@ def suppress_all_logs():
     # Suprimir warnings de requests
     urllib3.disable_warnings()
 
-
-
 class WaveBypass:
     def __init__(self):
         self.setup_driver()
@@ -101,6 +97,20 @@ class WaveBypass:
     def get_session(self):
         try:
             print("Iniciando obtención de sesión...")
+            cookie_file = 'cookies.json'
+            lock = FileLock(f"{cookie_file}.lock")
+            with lock:
+                # Verificar si hay guardados en un cookies.json y verificar si tiene true o false
+                with open(cookie_file, 'r', encoding='utf-8') as f:
+                    cookies = json.load(f)
+                    for cookie_name, cookie_value in cookies.items():
+                        if not cookie_value:  # Usar la cookie que esté en false
+                            self.session_id = cookie_name
+                            # Marcar la cookie como usada
+                            cookies[self.session_id] = True
+                            print(f"Session ID encontrado en cookies.json: {self.session_id}")
+                            return self.session_id
+
             self.driver.get('https://key.getwave.gg/freemium-tasks')
             
             # Esperar a que la página cargue completamente
@@ -127,6 +137,23 @@ class WaveBypass:
                         'value': self.session_id,
                         'domain': '.getwave.gg'
                     })
+                    
+                    # Guardar la cookie en un archivo
+                    with lock:
+                        try:
+                            # Leer las cookies existentes
+                            with open(cookie_file, 'r', encoding='utf-8') as f:
+                                cookies = json.load(f)
+                        except FileNotFoundError:
+                            # Si el archivo no existe, inicializar un diccionario vacío
+                            cookies = {}
+                        
+                        # Agregar o actualizar la cookie actual
+                        cookies[self.session_id] = False
+                        
+                        # Guardar las cookies actualizadas en el archivo
+                        with open(cookie_file, 'w', encoding='utf-8') as f:
+                            json.dump(cookies, f)
                     
                     return self.session_id
             
@@ -155,7 +182,7 @@ class WaveBypass:
                 'priority': 'u=1, i'
             }
 
-            response = requests.post('https://api.getwave.gg/v1/task/initiate', headers=headers)
+            response = requests.post('https://api.getwave.gg/v1/task/initiate', headers=headers, timeout=20)
             data = response.json()
             return data.get('link')
 
@@ -177,20 +204,30 @@ class WaveBypass:
                 'sec-ch-ua-platform': '"Windows"',
                 'sec-fetch-dest': 'empty',
                 'sec-fetch-mode': 'cors',
-                'sec-fetch-site': 'cross-site'
+                'sec-fetch-site': 'cross-site',
+                'accept-encoding': 'gzip, deflate, br, zstd',
+                'if-none-match': 'W/"40-ytFVeUWlUOe2NNHT9DS5uLtQtP0"',
+                'priority': 'u=1, i'
             }
-
+    
             response = requests.get(
-                f'https://bypassunlockapi-eqyp.onrender.com/bypass',
+                'https://bypassunlockapi-eqyp.onrender.com/bypass',
                 params=params,
-                headers=headers
+                headers=headers,
+                timeout=20
             )
             
             data = response.json()
             return data.get('bypassed')
-
+    
+        except requests.RequestException as e:
+            print(f"Error en bypass (RequestException): {e}")
+            return None
+        except json.JSONDecodeError as e:
+            print(f"Error en bypass (JSONDecodeError): {e}")
+            return None
         except Exception as e:
-            print(f"Error en bypass: {e}")
+            print(f"Error en bypass (General): {e}")
             return None
 
     def validate_task(self, bypassed_link):
@@ -221,7 +258,8 @@ class WaveBypass:
             response = requests.post(
                 'https://api.getwave.gg/v1/task/validate',
                 headers=headers,
-                json={'cb': cb}
+                json={'cb': cb},
+                timeout=20
             )
 
             return response.json()
@@ -230,13 +268,13 @@ class WaveBypass:
             print(f"Error en validación: {e}")
             return None
 
-    def make_request(self, url, method='GET', headers=None, json=None):
+    def make_request(self, url, method='GET', headers=None, json_data=None):
         """Función auxiliar para hacer requests con manejo de SSL"""
         try:
             if method == 'GET':
-                response = requests.get(url, headers=headers, verify=False)
+                response = requests.get(url, headers=headers, verify=False, timeout=20)
             else:
-                response = requests.post(url, headers=headers, json=json, verify=False)
+                response = requests.post(url, headers=headers, json=json_data, verify=False, timeout=20)
             return response.json()
         except Exception as e:
             print(f"Error en request a {url}: {e}")
@@ -332,8 +370,20 @@ class WaveBypass:
                         if status['status'] == 'completed':
                             print(f"¡Clave obtenida exitosamente!: {status['key']}")
                             #Almacenar la clave en un archivo o base de datos
-                            with open('keys.txt', 'a') as f:
+                            with open('keys.txt', 'a', encoding='utf-8') as f:
                                 f.write(f"{server_vpn} - {status['key']}\n")
+                            
+                            # Eliminar la cookie usada
+                            cookie_file = 'cookies.json'
+                            lock = FileLock(f"{cookie_file}.lock")
+                            with lock:
+                                with open(cookie_file, 'r', encoding='utf-8') as f:
+                                    cookies = json.load(f)
+                                if self.session_id in cookies:
+                                    del cookies[self.session_id]
+                                with open(cookie_file, 'w', encoding='utf-8') as f:
+                                    json.dump(cookies, f)
+                                
                             # Hacer un beep para notificar que se obtuvo la clave
                             winsound.Beep(1000, 300)  
                             return
