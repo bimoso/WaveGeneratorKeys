@@ -7,6 +7,7 @@ import logging
 import winsound
 import json
 from urllib.parse import urlparse, parse_qs
+from urllib3.exceptions import InsecureRequestWarning
 import requests
 import urllib3
 from selenium import webdriver
@@ -17,6 +18,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.remote.remote_connection import LOGGER
 from urllib3.connectionpool import log as urllibLogger
 from filelock import FileLock
+
+urllib3.disable_warnings(InsecureRequestWarning)
 
 def check_update():
     """Check and update the script from GitHub repository if a new version is available."""
